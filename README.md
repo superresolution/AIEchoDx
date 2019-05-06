@@ -30,15 +30,16 @@ tensorflow version = 1.10.0
 keras version = 2.2.2
 ```
 
-1.1 Clone the repository
+#### 1.1 Clone the repository
 ```
 git clone https://github.com/superresolution/AIEchoDx.git
 ```
-1.2 Setup a new conda enviroment
+#### 1.2 Setup a new conda enviroment
 ```
-conda create --name aiechodx --file requirement
+$ conda create --name aiechodx --file requirement
 ```
-1.3 Required Data Pre-Processing
+#### 1.3 Required Data Pre-Processing
+
 
 ### 2. Training AIEchoDx network
 
