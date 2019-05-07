@@ -77,35 +77,38 @@ Make a data file to store the single images splited from echocardiographic video
 cd AIEchoDx_demo
 
 python train_inception_v3.py -d <file> 
-
 ```
 #### 2.2 Transfer a 45 frame-echo videos into a 45×2048 matrix
 
 ```
 python prepare_data_for_diagnostic_network.py -m <file1>
-
 ```
 *file1: model weight
+
 *dir1: save data to dir
 
 #### 2.3 Train the diagnostic network
 ```
 python train_diagnosis_network.py -t <dir1> -v <dir2> -f <frames>
-
 ```
 *dir1: training `.txt` files
+
 *dir2: validation `.txt` files
+
 *frames: number of frames; 45 were set as default
 
 ### 3. Prediction
 ```
 python predict.py -v <filename1> -i <filename2> -d <filename3> -x 45 -n 0
-
 ```
 *filename1: where the video is saved
+
 *filename2: retrained inception v3 model
+
 *filename3: retraiend diagnostic model
+
 *-x: the last number of the 45 frames in the video
+
 *-x: the first number of the 45 frames video
 
 ### 4. Compare with human physicians
