@@ -41,7 +41,7 @@ seaborn = 0.9.0
 ```
 
 #### 1.1 Clone the repository
-Download software from github and cd to 
+Download software from github and cd to AIEchoDx folder
 ```
 git clone https://github.com/superresolution/AIEchoDx.git
 cd ~/AIEchoDx
