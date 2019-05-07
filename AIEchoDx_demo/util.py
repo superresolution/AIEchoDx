@@ -26,25 +26,9 @@ def load_avi_video(videoname):
         fc += 1
     cap.release()
 
-def load_avi_video(videoname):
-    # load avi video using cv2 package
-    cap = cv2.VideoCapture(videoname)
-    framenum = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    channel = 3
-
-    img_array = np.empty((framenum, height, width, channel), np.dtype('uint8'))
-    fc = 0
-    ret = True
-    while (fc < framenum and ret):
-        ret, img_array[fc] = cap.read()
-        fc += 1
-    cap.release()
-
     return img_array, frame_num, width, height, channel
 
-def load_file_information(filename):
+def load_dcm_information(filename):
     #load information of
     info = {}
     ds = dicom.read_file(filename)
