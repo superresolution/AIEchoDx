@@ -30,11 +30,11 @@ def load_inception_v3_model(filename):
 def prepare_data(args):
 
     SZ = args.size
-    model = load_inception_v3_model(args.model_name)
+    model = load_inception_v3_model(args.modelname)
     dir_name = "./data"
     fold2 = ["train", "validation", "test"]
     fold3 = ["ASD", "DCM", "HP", "MI", "NORM"]
-    save_dir = make_dir(args.save_dir)
+    save_dir = make_dir(args.savedir)
 
     for f1 in fold2:
         for f2 in fold3:
@@ -58,14 +58,14 @@ def prepare_data(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--model_name",
+        "--modelname",
         "-m",
         type=str,
         default="default",
         help="model weights of retrained inception v3"
     )
     parser.add_argument(
-        "--save_dir",
+        "--savedir",
         "-s",
         type=str,
         default="default",
