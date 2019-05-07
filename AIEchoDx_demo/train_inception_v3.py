@@ -41,8 +41,8 @@ def train(args):
 
     classes = ["ASD", "DCM", "HP", "MI", "NORM"]
     my_class_weight = {0: 1., 1: 2., 2: 1., 3: 2., 4: 1., 5: 1.}
-    echo_train = os.path.join(args.data_dir,"train")
-    echo_validation = os.path.join(args.data_dir,"validation")
+    echo_train = os.path.join(args.datadir,"train")
+    echo_validation = os.path.join(args.datadir,"validation")
 
     # load model and set model compile:
     model = build_inception_v3_model()
@@ -111,7 +111,7 @@ def train(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--data_dir",
+        "--datadir",
         "-d",
         type=str,
         default="default",
