@@ -3,8 +3,13 @@ from __future__ import division
 from __future__ import print_function
 
 import numpy as np
+from pandas import DataFrame
+import argparse
 from keras.models import load_model
 import cv2
+import os
+import glob
+from keras import backend as K
 
 
 def make_dir(dir_):
@@ -53,6 +58,9 @@ def visualize_class_activation_map_v3(model, img_path, output_path, group):
     img = heatmap * 0.5 + original_img  # 0.5
     cv2.imwrite(output_path, img)
 
+    return
+
+
 def load_inception_v3_model(filename):
     model_name = filename
     model = load_model(model_name)
@@ -63,15 +71,27 @@ def load_inception_v3_model(filename):
 
     return model
 
+
 def cam_analysis(args):
+    # load retrained inception v3 model
+    model = load_inception_v3_model(args.modelname)
 
-    model = load_inception_v3_model(args.model_name)
+    # load
+    dcm_dir = args.inputdir  # file dir of the echo images
+    file_name = [x for x in glob.glob(dcm_dir + "*.png")]
+    file_name = DataFrame(data=file_name, columns=["dir_"])
+    file_name["patients"] = ""
+    for idx, y in enumerate(file_name.dir_):
+        y1 = y.split("\\")[-1]
+        length = len(y1.split("_")[-1])
+        y2 = y1[:-(length + 1)]
+        file_name.loc[idx, "patients"] = y2
 
-    for idx, x in enumerate(args.filedir):
+    for idx, x in enumerate(args.outputdir):
 
         # ASD:0; DCM:1, HCM:2, pMI:3， NORM:4
         group = args.group
-        output_path = os.path.join(args.filedir, "cam_output")
+        output_path = os.path.join(args.outputdir, "cam_output")
         make_dir(dir_=output_path)
         dataframe = file_name[file_name["patients"] == x]
 
@@ -82,25 +102,33 @@ def cam_analysis(args):
             for idx2, y in enumerate(dataframe["dir_"]):
                 img_path = y
                 directory = output_path + x
-                generate_dir(directory=directory)
+                make_dir(dir_=directory)
 
-                fil = img_path.split("\\")[-1]
-                output_path2 = directory + "\\" + fil
+                fil = img_path.split("/")[-1]
+                output_path2 = directory + "/" + fil
                 visualize_class_activation_map_v3(model, img_path, output_path2, group)
     return
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--model_name",
+        "--modelname",
         "-m",
         type=str,
         default="default",
         help="model weights of retrained inception v3"
     )
     parser.add_argument(
-        "--filedir",
-        "-f",
+        "--inputdir",
+        "-m",
+        type=str,
+        default="default",
+        help="model weights of retrained inception v3"
+    )
+    parser.add_argument(
+        "--outputdir",
+        "-o",
         type=str,
         default="default",
         help="filename to save outputs of retrained inception v3"
