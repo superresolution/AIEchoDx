@@ -120,7 +120,7 @@ Will upload in the future
 Please see codes `4_CAM_Figure_5.ipynb` in AIEchoDx_demo_notebook
 
 ### 6. DCM patients clustering
-The [PHATE] (https://github.com/KrishnaswamyLab/PHATE/blob/master/README.md) software could be installed as by `pip`:
+The [PHATE](https://github.com/KrishnaswamyLab/PHATE/blob/master/README.md) software could be installed as by `pip`:
 ```
 pip install --user phate
 ```
