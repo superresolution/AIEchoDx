@@ -52,7 +52,7 @@ Make and activate a new Python 3.6 environment
 ```
 conda env create -f requirement.yml
 ```
-##### Installation with .sh script
+##### Installation with shell script
 ```
 ./setup.sh
 ```
