@@ -81,7 +81,7 @@ python train_inception_v3.py -d <file>
 #### 2.2 Transfer a 45 frame-echo videos into a 45×2048 matrix
 
 ```
-python prepare_data_for_diagnostic_network.py -m <file1>
+python prepare_data_for_diagnostic_network.py -m <file1> -s <dir1>
 ```
 *file1: model weight
 
