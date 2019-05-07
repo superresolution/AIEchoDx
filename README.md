@@ -17,6 +17,9 @@ Paper is under review
   * [1.2. Setup a new conda enviroment](#12-setup-a-new-conda-enviroment)
   * [1.3. Required Data Pre-Processing](#13-required-data-pre-processing)
 * [2. Training AIEchoDx network](#2-training-aiechodx-network)
+  * [2.1. Train the Google's Inception V3 network](#21-train-the-Google's-inception-v3-network)
+  * [2.2. Transfer a 45 frame-echo videos into a 45×2048 matrix](#22-transfer-a-45-frame-echo-videos-into-a-45×2048-matrix)
+  * [2.3. Required Data Pre-Processing](#23-required-data-pre-processing)
 * [3. Testing](#3-testing)
 * [4. Compare with human physicians](#4-compare-with-human-physicians)
 * [5. CAM analysis](#5-cam-analysis)
@@ -66,6 +69,12 @@ In detals, the python functions `load_dcm_video` and `load_avi_video` are used t
 Othervise, echocardiographic images need to be cut and save into smaller `.png` format before training.
 
 ### 2. Training AIEchoDx network
+AIEchoDx is a two-stage network. We train the network separatedly. But in the future, we can combine the two stage networks and train them togather.
+#### 2.1 Train the Google's Inception V3 network
+
+#### 2.2 Transfer a 45 frame-echo videos into a 45×2048 matrix
+
+#### 2.3 Train the diagnostic network
 
 ### 3. Testing
 
