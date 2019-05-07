@@ -28,6 +28,7 @@ AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis N
 
 ### 1. Installation and Requirements
 System Requirements: Windows (>= 7), Mac OS X (>= 10.8) or Linux
+
 All other software dependencies are listed below:
 ```
 python version = 3.6.5
