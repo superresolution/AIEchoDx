@@ -1,4 +1,4 @@
-AIEchoDx
+AIEchoDx (Demo version 0.1.0)
 =====================================
 
 ### News
