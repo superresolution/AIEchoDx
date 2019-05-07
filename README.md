@@ -9,7 +9,7 @@ AIEchoDx
 AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis Network”, is a two-stage neural network to diagnose patients with atrial septal defect (ASD), dilated cardiomyopathy (DCM), hypertrophic cardiomyopathy (HCM), prior myocardial infarction (prior MI), and normal controls. It reads 45 frames of echocardiographic videos to make the diagnosis.
 
 ### Citations
-Paper is under review
+[1] Will uploade in the future
 
 ### Table of Contents
 * [1. Installation and Requirements](#1-installation-and-requirements)
@@ -20,7 +20,7 @@ Paper is under review
   * [2.1. Train the Google's Inception V3 network](#21-train-the-Googles-inception-v3-network)
   * [2.2. Transfer a 45 frame-echo videos into a 45×2048 matrix](#22-transfer-a-45-frame-echo-videos-into-a-452048-matrix)
   * [2.3. Train the diagnostic network](#23-train-the-diagnostic-network)
-* [3. Testing](#3-testing)
+* [3. Prediction](#3-prediction)
 * [4. Compare with human physicians](#4-compare-with-human-physicians)
 * [5. CAM analysis](#5-cam-analysis)
 * [6. DCM patients clustering](#6-dcm-patients-clustering)
@@ -71,15 +71,50 @@ Othervise, echocardiographic images need to be cut and save into smaller `.png` 
 ### 2. Training AIEchoDx network
 AIEchoDx is a two-stage network. We train the network separatedly. But in the future, we can combine the two stage networks and train them togather.
 #### 2.1 Train the Google's Inception V3 network
+Make a data file to store the single images splited from echocardiographic videos; make a model_weight file to store the models and loss value.
+```
+cd AIEchoDx_demo
 
+python train_inception_v3.py -d <file> 
+
+```
 #### 2.2 Transfer a 45 frame-echo videos into a 45×2048 matrix
 
-#### 2.3 Train the diagnostic network
+```
+python prepare_data_for_diagnostic_network.py -m <file1>
 
-### 3. Testing
+```
+*file1: model weight
+*dir1: save data to dir
+
+#### 2.3 Train the diagnostic network
+```
+python train_diagnosis_network.py -t <dir1> -v <dir2> -f <frames>
+
+```
+*dir1: training `.txt` files
+*dir2: validation `.txt` files
+*frames: number of frames; 45 were set as default
+
+### 3. Prediction
+```
+python predict.py -v <filename1> -i <filename2> -d <filename3> -x 45 -n 0
+
+```
+*filename1: where the video is saved
+*filename2: retrained inception v3 model
+*filename3: retraiend diagnostic model
+*-x: the last number of the 45 frames in the video
+*-x: the first number of the 45 frames video
 
 ### 4. Compare with human physicians
 
+Will upload in the future
+
 ### 5. CAM analysis
 
+Please see ./AIEchoDx/AIEchDx_demo_notebook/4_CAM_Figure_5.ipynb
+
 ### 6. DCM patients clustering
+
+Please see ./AIEchoDx/AIEchDx_demo_notebook/5_DCM_patients_analysis_Figure_6.ipynb
