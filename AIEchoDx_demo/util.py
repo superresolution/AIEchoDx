@@ -75,8 +75,6 @@ def remove_info2(video):
                 video2[:,i,j] = np.zeros((l,3))
     return video2
 
-
-
 def write_video(img_array):
     frame_num, width, height = img_array.shape
     filename_output = filename.split('.')[0] + '.avi'
