@@ -2,6 +2,7 @@ import SimpleITK as sitk
 from PIL import Image
 import numpy as np
 import cv2
+import pydicom
 
 def load_dcm_video(filename):
     #
@@ -26,12 +27,12 @@ def load_avi_video(videoname):
         fc += 1
     cap.release()
 
-    return img_array, frame_num, width, height, channel
+    return img_array,framenum, width, height, channel
 
 def load_dcm_information(filename):
     #load information of
     info = {}
-    ds = dicom.read_file(filename)
+    ds = pydicom.read_file(filename)
     info['PatientID'] = ds.PatientID
     info['PatientName'] = ds.PatientName
     info['PatientBirthDate'] = ds.PatientBirthDate
@@ -63,19 +64,18 @@ def remove_info(video):
         for j in range(col):
             if (video[:,i,j,0] == np.array([video[0,i,j,0]] * l)).all():
                 video[:,i,j] = np.zeros((l,3))
-    return
+    return video
 
 def remove_info2(video):
     #remove periphery inforvideomation
     l, row, col = video.shape[:3]
-    video2 = video.copy()
     for i in range(row):
         for j in range(col):
             if abs(video[:,i,j,0].astype("float32") - np.array([video[0,i,j,0]] * l).astype("float32")).max()<10:
-                video2[:,i,j] = np.zeros((l,3))
-    return video2
+                video[:,i,j] = np.zeros((l,3))
+    return video
 
-def write_video(img_array):
+def write_video(img_array, filename):
     frame_num, width, height = img_array.shape
     filename_output = filename.split('.')[0] + '.avi'
     video = cv2.VideoWriter(filename_output, -1, 16, (width, height))
