@@ -113,8 +113,8 @@ Will upload in the future
 
 ### 5. CAM analysis
 
-Please see ./AIEchoDx/AIEchDx_demo_notebook/4_CAM_Figure_5.ipynb
+Please see ./IEchDx_demo_notebook/4_CAM_Figure_5.ipynb
 
 ### 6. DCM patients clustering
 
-Please see ./AIEchoDx/AIEchDx_demo_notebook/5_DCM_patients_analysis_Figure_6.ipynb
+Please see ./AIEchoDx/5_DCM_patients_analysis_Figure_6.ipynb
