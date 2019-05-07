@@ -16,6 +16,7 @@ from keras.callbacks import (
 
 #parameters
 
+LR = 0.0001
 FRAMES = 45
 classes = ["ASD","DCM","HP","MI","NORM"]
 
@@ -135,11 +136,11 @@ def array_concatenate(dir_,FRAMES=45):
 
     return X,y
 
-def build_diagnostic_network(CLASS=5):
+def build_diagnostic_network(CLASS=5, FRAMES=45):
 
     # build a diagnostic network with Conv1D layers
     model = Sequential()
-    model.add(layers.Conv1D(2048, 2, activation='relu', padding="same", input_shape=(X_train.shape[1], 2048)))
+    model.add(layers.Conv1D(2048, 2, activation='relu', padding="same", input_shape=(FRAMES, 2048)))
     model.add(layers.Conv1D(512, 2, activation='relu', dilation_rate=2, padding="same"))
     model.add(layers.Flatten())
     model.add(layers.Dense(1000, activation='relu'))
@@ -151,21 +152,21 @@ def build_diagnostic_network(CLASS=5):
 
 def train_diagnostic_network(args):
     # parameter
-    X_train, y_train = array_concatenate(args.train_dir,args.FRAMES)
-    X_val, y_val = array_concatenate(args.val_dir,args.FRAMES)
+    X_train, y_train = array_concatenate(args.traindir,args.FRAMES)
+    X_val, y_val = array_concatenate(args.valdir,args.FRAMES)
 
-    diag_model = build_diagnostic_network(args.CLASS)
+    diag_model = build_diagnostic_network(args.CLASS,args.FRAMES)
     diag_model.compile(optimizer=SGD(lr=LR, momentum=0.9),loss='categorical_crossentropy',metrics=['accuracy'])
 
     # Checkpoint
     checkpointer = ModelCheckpoint(
-        filepath="diag_model_{}_checkpoint_{}_{}.h5".format(type_name, "first", "title"),
+        filepath= os.path.join("./model_weights/diagnostic_model","diag_model_{}_checkpoint_{}_{}.h5".format("", "", "")),
         verbose=1,
         save_best_only=True)
 
     # csvlogger
     csv_logger = CSVLogger(
-        'diag_csv_logger_{}_{}_{}.csv'.format(type_name, "first", "title"))
+        os.path.join("./model_weights/diagnostic_model", 'diag_csv_logger_{}_{}_{}.csv'.format("", "", "")))
 
     diag_model.fit(X_train, y_train,
               epochs=50,
@@ -177,14 +178,14 @@ def train_diagnostic_network(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--train_dir",
+        "--traindir",
         "-t",
         type=str,
         default="default",
         help="dataset folder for training data"
     )
     parser.add_argument(
-        "--val_dir",
+        "--valdir",
         "-v",
         type=str,
         default="default",
