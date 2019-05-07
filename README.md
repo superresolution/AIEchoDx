@@ -61,9 +61,9 @@ This enviroment could be deactivate by:
 conda deactivate
 ```
 #### 1.3 Required Data Pre-Processing
-The echocardiographic images need pre-preocessing before training in our AIEchoDx network. Here we provided seveal useful python functions to read, write and optimize echocardiographic images in 'util.py'.
-In detals, the python functions 'load_dcm_video' and 'load_avi_video' are used to read and transfer '.dcm' and '.avi' format videos into numpy matrix. The python function 'load_dcm_information' is used to read patients informations. The function 'limited_equalize' is used to optimize the contracts of medical images. The function 'remove_info' is used to remove the information of patients. 
-Othervise, echocardiographic images need to be cut and save into smaller '.png' format before training.
+The echocardiographic images need pre-preocessing before training in our AIEchoDx network. Here we provided seveal useful python functions to read, write and optimize echocardiographic images in `util.py`.
+In detals, the python functions `load_dcm_video` and `load_avi_video` are used to read and transfer `.dcm` and `.avi` format videos into numpy matrix. The python function `load_dcm_information` is used to read patients informations. The function `limited_equalize` is used to optimize the contracts of medical images. The functions `remove_info` and `remove_info2` are used to remove the information of patients. 
+Othervise, echocardiographic images need to be cut and save into smaller `.png` format before training.
 
 ### 2. Training AIEchoDx network
 
