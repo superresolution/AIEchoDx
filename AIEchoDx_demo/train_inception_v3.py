@@ -50,13 +50,13 @@ def train(args):
 
     # Checkpoint
     checkpointer = ModelCheckpoint(
-        filepath="model_checkpoint_{}_{}.h5".format("first", "title"),
+        filepath= os.path.join("./model_weigth/inception_v3_model","model_checkpoint_{}_{}.h5".format("first", "title")),
         verbose=1,
         save_best_only=True)
 
     # csvlogger
     csv_logger = CSVLogger(
-        'csv_logger_{}_{}.csv'.format("first", "title"))
+        os.path.join("./model_weigth/inception_v3_model",'csv_logger_{}_{}.csv'.format("first", "title")))
 
     # image data generator:
     train_datagen = ImageDataGenerator(
