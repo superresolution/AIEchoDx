@@ -1,9 +1,11 @@
-AIEchoDx (Demo version 0.1.0)
+AIEchoDx (Demo version 1.0.0)
 =====================================
 
 ### News
 6 May 2019:
 * Upload AIEchoDx_demo and AIEchoDx_demo_notebook
+5 Jan 2020:
+* Upload AIEchoDx_demo 1.0.0
 
 ### Introduction
 AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis Network”, is a two-stage neural network to diagnose patients with atrial septal defect (ASD), dilated cardiomyopathy (DCM), hypertrophic cardiomyopathy (HCM), prior myocardial infarction (prior MI), and normal controls. It reads 45 frames of echocardiographic videos to make the diagnosis.
