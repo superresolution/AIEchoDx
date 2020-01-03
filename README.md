@@ -4,6 +4,7 @@ AIEchoDx (Demo version 1.0.0)
 ### News
 6 May 2019:
 * Upload AIEchoDx_demo and AIEchoDx_demo_notebook
+
 5 Jan 2020:
 * Upload AIEchoDx_demo 1.0.0
 
