@@ -1,8 +1,29 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import argparse
+import os
 import SimpleITK as sitk
 from PIL import Image
 import numpy as np
 import cv2
 import pydicom
+
+# parameter
+classes = ["ASD", "DCM", "HCM", "pMI", "NORM"]
+(a,b,c) = (3,1,1)
+path_in = os.path.join(os.path.abspath('.'), "video_examples")
+path_in_list = os.listdir(path_in)
+path_out_train = os.path.join(os.path.abspath('.'), "data/train")
+path_out_validation = os.path.join(os.path.abspath('.'), "data/validation")
+path_out_test = os.path.join(os.path.abspath('.'), "data/test")
+
+#
+def make_dir(dir_):
+    if not os.path.exists(dir_):
+        os.makedirs(dir_)
+    return dir_
 
 
 def load_dcm_video_new(videoname):
@@ -131,3 +152,31 @@ def remove_info4(video):
     video[mask == 0] = np.zeros((3, l))
     video = np.transpose(video, (3, 0, 1, 2))
     return (video)
+
+def main():
+
+    for class_name in classes:
+        video_list = [f for f in path_in_list if class_name in f]
+        for i in range(len(video_list)):
+            video_path = os.path.join(path_in, video_list[i])
+            img_array, framenum, width, height, channel = load_avi_video(video_path)
+            img_array = remove_info4(img_array)
+
+            if i < a:
+                sub_dir = os.path.join(path_out_train, class_name)
+                for j in range(len(img_array)):
+                    png_file = os.path.join(sub_dir, video_list[i].split(".")[0] + "-" + str(j) + ".png")
+                    cv2.imwrite(png_file, limited_equalize(img_array[j]))
+            elif i < a + b:
+                sub_dir = os.path.join(path_out_validation, class_name)
+                for j in range(len(img_array)):
+                    png_file = os.path.join(sub_dir, video_list[i].split(".")[0] + "-" + str(j) + ".png")
+                    cv2.imwrite(png_file, limited_equalize(img_array[j]))
+            else:
+                sub_dir = os.path.join(path_out_test, class_name)
+                for j in range(len(img_array)):
+                    png_file = os.path.join(sub_dir, video_list[i].split(".")[0] + "-" + str(j) + ".png")
+                    cv2.imwrite(png_file, limited_equalize(img_array[j]))
+
+if __name__ == '__main__':
+    main()

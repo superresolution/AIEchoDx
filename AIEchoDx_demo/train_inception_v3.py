@@ -15,48 +15,54 @@ from keras.callbacks import (
     ModelCheckpoint)
 
 # parameter
-BZ = 500
+BZ = 128
 EPOCH = 50
 LR = 0.001
 SZ = 224  # or 299 is also OK
 DO = 0.5
 CLASS = 5  # ASD, DCM, HCM, pMI and NORM
+classes = ["ASD", "DCM", "HCM", "pMI", "NORM"]
+my_class_weight = {0: 1., 1: 2., 2: 1., 3: 2., 4: 1., 5: 1.}
 
-def build_inception_v3_model():
-    # create the base pre-trained model
+def get_model(summary=False):
+    """Return the keras inception-v3 model of the network"""
+    # pre-trained model with the weight of imagenet
     base_model = InceptionV3(weights="imagenet", input_shape=(SZ, SZ, 3), include_top=False)
-
+    # add Dropout layer
     x = base_model.output
     x = layers.Dropout(DO)(x)
+    # add GlobalAveragePooling layer
     x = layers.GlobalAveragePooling2D()(x)
     x = layers.Dropout(DO)(x)
+    # add Dense layer
     predictions = layers.Dense(CLASS, activation='softmax')(x)
-
-    # this is the model we will train
     model = Model(inputs=base_model.input, outputs=predictions)
+
+    if summary:
+        print(model.summary())
 
     return model
 
 def train(args):
-
-    classes = ["ASD", "DCM", "HP", "MI", "NORM"]
-    my_class_weight = {0: 1., 1: 2., 2: 1., 3: 2., 4: 1., 5: 1.}
+    """train the model"""
     echo_train = os.path.join(args.datadir,"train")
     echo_validation = os.path.join(args.datadir,"validation")
+    save_path = os.path.join(os.path.abspath('.'), "model_weights/inception_v3_model")
+
 
     # load model and set model compile:
-    model = build_inception_v3_model()
+    model = get_model()
     model.compile(optimizer=SGD(lr=LR, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
     # Checkpoint
     checkpointer = ModelCheckpoint(
-        filepath= os.path.join("./model_weigth/inception_v3_model","model_checkpoint_{}_{}.h5".format("first", "title")),
+        filepath= os.path.join(save_path,"model_checkpoint_{}_{}.h5".format("first", "title")),
         verbose=1,
         save_best_only=True)
 
     # csvlogger
     csv_logger = CSVLogger(
-        os.path.join("./model_weigth/inception_v3_model",'csv_logger_{}_{}.csv'.format("first", "title")))
+        os.path.join(save_path,'csv_logger_{}_{}.csv'.format("first", "title")))
 
     # image data generator:
     train_datagen = ImageDataGenerator(
@@ -97,10 +103,10 @@ def train(args):
 
     # train 50 epochs
     model.fit_generator(train_generator,
-                        steps_per_epoch=100000. / BZ,
+                        steps_per_epoch=64000. / BZ,
                         epochs=EPOCH,
                         validation_data=val_generator,
-                        validation_steps=10000. / BZ,
+                        validation_steps=38400. / BZ,
                         class_weight=my_class_weight,
                         callbacks=[csv_logger, checkpointer])
 

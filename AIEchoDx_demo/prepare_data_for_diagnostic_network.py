@@ -10,7 +10,6 @@ import os
 import cv2
 
 
-
 def make_dir(dir_):
     if not os.path.exists(dir_):
         os.makedirs(dir_)
@@ -31,9 +30,9 @@ def prepare_data(args):
 
     SZ = args.size
     model = load_inception_v3_model(args.modelname)
-    dir_name = "./data"
+    dir_name = os.path.join(os.path.abspath('.'), "data")
     fold2 = ["train", "validation", "test"]
-    fold3 = ["ASD", "DCM", "HP", "MI", "NORM"]
+    fold3 = ["ASD", "DCM", "HCM", "pMI", "NORM"]
     save_dir = make_dir(args.savedir)
 
     for f1 in fold2:

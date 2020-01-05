@@ -15,10 +15,9 @@ from keras.callbacks import (
 
 
 #parameters
-
 LR = 0.0001
 FRAMES = 45
-classes = ["ASD","DCM","HP","MI","NORM"]
+classes = ["ASD","DCM","HCM","pMI","NORM"]
 
 def inception_v3_outputs_to_array(txt_dir, data_dir, frames, clips_no=5):
     """
@@ -136,8 +135,9 @@ def array_concatenate(dir_,FRAMES=45):
 
     return X,y
 
-def build_diagnostic_network(CLASS=5, FRAMES=45):
-
+def get_diagnostic_model(CLASS=1, FRAMES=45, summary=False):
+    """Return the keras diagnostic model of the network
+    """
     # build a diagnostic network with Conv1D layers
     model = Sequential()
     model.add(layers.Conv1D(2048, 2, activation='relu', padding="same", input_shape=(FRAMES, 2048)))
@@ -147,26 +147,32 @@ def build_diagnostic_network(CLASS=5, FRAMES=45):
     model.add(layers.Dropout(0.5, seed=42))
     model.add(layers.Dense(CLASS, activation='softmax'))
 
+    if summary:
+        print(model.summary())
+
     return model
 
 
 def train_diagnostic_network(args):
+    """train the diagnostic network"""
     # parameter
     X_train, y_train = array_concatenate(args.traindir,args.FRAMES)
     X_val, y_val = array_concatenate(args.valdir,args.FRAMES)
 
-    diag_model = build_diagnostic_network(args.CLASS,args.FRAMES)
+    diag_model = get_diagnostic_model(args.CLASS,args.FRAMES)
     diag_model.compile(optimizer=SGD(lr=LR, momentum=0.9),loss='categorical_crossentropy',metrics=['accuracy'])
+
+    save_path = os.path.join(os.path.abspath('.'), "model_weights/diagnostic_model")
 
     # Checkpoint
     checkpointer = ModelCheckpoint(
-        filepath= os.path.join("./model_weights/diagnostic_model","diag_model_{}_checkpoint_{}_{}.h5".format("", "", "")),
+        filepath= os.path.join(save_path,"diag_model_{}_checkpoint_{}_{}.h5".format("", "", "")),
         verbose=1,
         save_best_only=True)
 
     # csvlogger
     csv_logger = CSVLogger(
-        os.path.join("./model_weights/diagnostic_model", 'diag_csv_logger_{}_{}_{}.csv'.format("", "", "")))
+        os.path.join(save_path, 'diag_csv_logger_{}_{}_{}.csv'.format("", "", "")))
 
     diag_model.fit(X_train, y_train,
               epochs=50,
