@@ -7,6 +7,7 @@ AIEchoDx (Demo version 1.0.0)
 
 5 Jan 2020:
 * Upload AIEchoDx_demo 1.0.0
+* Upload 25 examples of patients' echocardiographic videos
 
 ### Introduction
 AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis Network”, is a two-stage neural network to diagnose patients with atrial septal defect (ASD), dilated cardiomyopathy (DCM), hypertrophic cardiomyopathy (HCM), prior myocardial infarction (prior MI), and normal controls. It reads 45 frames of echocardiographic videos to make the diagnosis.
@@ -27,6 +28,7 @@ AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis N
 * [4. Compare with human physicians](#4-compare-with-human-physicians)
 * [5. CAM analysis](#5-cam-analysis)
 * [6. DCM patients clustering](#6-dcm-patients-clustering)
+* [7. Examples of patients' echocardiographic videos](#6-Examples-of=patients'-echocardiographic-videos)
 
 
 ### 1. Installation and Requirements
@@ -126,6 +128,12 @@ Please see codes `4_CAM_Figure_5.ipynb` in AIEchoDx_demo_notebook
 The [PHATE](https://github.com/KrishnaswamyLab/PHATE/blob/master/README.md) software could be installed as by `pip`:
 ```
 pip install --user phate
+```
+### 7. Examples of patients' echocardiographic videos
+
+Split videos into single images and save the images in /data folder
+```
+python vide2images.py
 ```
 
 Please also see codes `5_DCM_patients_analysis_Figure_6.ipynb` in AIEchoDx_demo_notebook
