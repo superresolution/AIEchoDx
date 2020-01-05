@@ -28,7 +28,7 @@ AIEchoDx, which stands for “Artificial Intelligence Echocardiogram Diagnosis N
 * [4. Compare with human physicians](#4-compare-with-human-physicians)
 * [5. CAM analysis](#5-cam-analysis)
 * [6. DCM patients clustering](#6-dcm-patients-clustering)
-* [7. Examples of patients' echocardiographic videos](#6-Examples-of=patients'-echocardiographic-videos)
+* [7. Examples of patients' echocardiographic videos](#6-Examples-of-patients'-echocardiographic-videos)
 
 
 ### 1. Installation and Requirements
@@ -129,11 +129,14 @@ The [PHATE](https://github.com/KrishnaswamyLab/PHATE/blob/master/README.md) soft
 ```
 pip install --user phate
 ```
-### 7. Examples of patients' echocardiographic videos
-
-Split videos into single images and save the images in /data folder
-```
-python vide2images.py
-```
 
 Please also see codes `5_DCM_patients_analysis_Figure_6.ipynb` in AIEchoDx_demo_notebook
+
+### 7. Examples of patients' echocardiographic videos
+
+Split videos into single images and save the images in /AIEchoDx=demo/data folder
+```
+python video2images.py
+```
+
+
