@@ -138,5 +138,9 @@ Split videos into single images and save the images in ```/AIEchoDx-demo/data```
 ```
 python video2images.py
 ```
+### 8. Citation
 
+The paper has been accepted in Scientific Reports. Please cite as below:
+
+Liu, B., Chang, H., Yang, D. et al. A deep learning framework assisted echocardiography with diagnosis, lesion localization, phenogrouping heterogeneous disease, and anomaly detection. Sci Rep 13, 3 (2023). https://doi.org/10.1038/s41598-022-27211-w
 
